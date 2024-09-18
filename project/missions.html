@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Missions</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <nav id="navbar">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="heroes-villains.html">Heroes/Villains</a></li>
+          <li><a href="missions.html">Missions</a></li>
+          <li><a href="superpowers.html">Superpowers</a></li>
+          <li><a href="hero-superpower.html">Hero Superpowers</a></li>
+          <li><a href="villain-superpower.html">Villain Superpowers</a></li>
+          <li><a href="agents.html">Agents</a></li>
+        </ul>
+      </nav>
+      <button id="loginButton">Login</button>
+    </header>
+    <div id="form-container">
+      <h2>Add a Mission</h2>
+      <form id="missionForm" action="process_missions.php" method="post">
+        <div id="formFields">
+          <label for="MissionID">MissionID:</label>
+          <input type="number" id="MissionID" name="MissionID" required />
+          <label for="Name">Name:</label>
+          <input type="text" id="Name" name="Name" required />
+          <label for="VillainID">VillainID:</label>
+          <input type="number" id="VillainID" name="VillainID" required />
+          <label for="HeroID">HeroID:</label>
+          <input type="number" id="HeroID" name="HeroID" required />
+          <label for="People_Saved">People_Saved:</label>
+          <input type="number" id="People_Saved" name="People_Saved" required />
+          <label for="People_Lost">People_Lost:</label>
+          <input type="number" id="People_Lost" name="People_Lost" />
+          <label for="Priority_Level">Priority_Level:</label>
+          <input
+            type="text"
+            id="Priority_Level"
+            name="Priority_Level"
+            required
+          />
+        </div>
+        <input type="submit" value="Add Mission" />
+      </form>
+      <button onclick="clearForm()">Add Another Mission</button>
+    </div>
+    <div id="output"></div>
+    <div id="delete-form-container">
+      <h2>Delete a Mission</h2>
+      <form id="deleteMissionForm" action="process_missions.php" method="post">
+        <label for="DeleteMissionID">MissionID:</label>
+        <input
+          type="number"
+          id="DeleteMissionID"
+          name="DeleteMissionID"
+          required
+        />
+        <input type="submit" value="Delete Mission" />
+      </form>
+    </div>
+    <script>
+      document
+        .getElementById("loginButton")
+        .addEventListener("click", function () {
+          alert("Login functionality not implemented yet.");
+        });
+
+      function displayMission() {
+        const formData = new FormData(document.getElementById("missionForm"));
+        let outputHtml = `<h3>Mission Details</h3>`;
+        for (let [key, value] of formData.entries()) {
+          let label = key;
+          if (label !== "Name") {
+            outputHtml += `<p>${label}: ${value}</p>`;
+          } else {
+            outputHtml = `<h3>${value}</h3>` + outputHtml;
+          }
+        }
+        const outputDiv = document.createElement("div");
+        outputDiv.innerHTML = outputHtml;
+        document.getElementById("output").appendChild(outputDiv);
+      }
+
+      document
+        .getElementById("missionForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault(); // Prevent the default form submission
+          displayMission();
+          this.submit(); // Now submit the form after displaying the mission details
+        });
+
+      function clearForm() {
+        document.getElementById("missionForm").reset();
+        document.getElementById("output").innerHTML = ""; // Clear the output
+      }
+
+      document
+        .getElementById("deleteMissionForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault(); // Prevent the default form submission
+          if (confirm("Are you sure you want to delete this mission?")) {
+            this.submit(); // Now submit the form after confirmation
+          }
+        });
+    </script>
+  </body>
+</html>

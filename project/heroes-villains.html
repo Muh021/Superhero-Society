@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Heroes & Villains</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <nav id="navbar">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="heroes-villains.html">Heroes/Villains</a></li>
+          <li><a href="missions.html">Missions</a></li>
+          <li><a href="superpowers.html">Superpowers</a></li>
+          <li><a href="hero-superpower.html">Hero Superpowers</a></li>
+          <li><a href="villain-superpower.html">Villain Superpowers</a></li>
+          <li><a href="agents.html">Agents</a></li>
+        </ul>
+      </nav>
+      <button id="loginButton">Login</button>
+    </header>
+    <div id="form-container">
+      <h2>Add Hero or Villain</h2>
+      <form
+        id="heroVillainForm"
+        action="process_hero_villain.php"
+        method="post"
+      >
+        <label for="typeSelect">Choose a type:</label>
+        <select name="type" id="typeSelect" onchange="updateFormFields()">
+          <option value="hero">Hero</option>
+          <option value="villain">Villain</option>
+        </select>
+        <div id="formFields"></div>
+        <input type="submit" value="Submit" />
+      </form>
+      <button onclick="addAnother()">Add Another Hero/Villain</button>
+    </div>
+    <div id="output"></div>
+    <div id="get-form-container">
+      <h2>Get Hero or Villain</h2>
+      <form
+        id="getHeroVillainForm"
+        action="process_hero_villain.php"
+        method="post"
+      >
+        <label for="getTypeSelect">Get as:</label>
+        <select name="getType" id="getTypeSelect">
+          <option value="hero">Hero</option>
+          <option value="villain">Villain</option>
+        </select>
+        <label for="idInput">Enter ID:</label>
+        <input type="text" id="idInput" name="id" required />
+        <input type="submit" value="Get" />
+      </form>
+    </div>
+
+    <div id="get-output"></div>
+    <script>
+      document
+        .getElementById("heroVillainForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault(); // Prevent the default form submission
+          displayHeroVillain();
+          this.submit(); // Now submit the form after displaying the details
+        });
+
+      function updateFormFields() {
+        const type = document.getElementById("typeSelect").value;
+        const formFieldsContainer = document.getElementById("formFields");
+        formFieldsContainer.innerHTML = ""; // Clear existing fields
+        let fieldsHtml = `
+        <label for="Age">Age:</label>
+        <input type="number" id="age" name="age" required>
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+        <label for="dob">DOB:</label>
+        <input type="date" id="dob" name="dob">
+        <label for="archnemesis">Archnemesis:</label>
+        <input type="text" id="archnemesis" name="archnemesis">
+    `;
+
+        if (type === "hero") {
+          fieldsHtml += `
+            <label for="heroId">HeroID:</label>
+            <input type="number" id="heroId" name="heroId" required>
+            <label for="peopleSaved">People Saved:</label>
+            <input type="number" id="peopleSaved" name="peopleSaved">
+            <label for="agentId">AgentID:</label>
+            <input type="number" id="agentId" name="agentId">
+            <label for="seniority">Seniority:</label>
+            <input type="text" id="seniority" name="seniority">
+        `;
+        } else if (type === "villain") {
+          fieldsHtml += `
+            <label for="villainId">VillainID:</label>
+            <input type="number" id="villainId" name="villainId" required>
+            <label for="peopleKilled">People Killed:</label>
+            <input type="number" id="peopleKilled" name="peopleKilled">
+        `;
+        }
+        formFieldsContainer.innerHTML = fieldsHtml; // Update HTML with the appropriate fields
+      }
+
+      function displayHeroVillain() {
+        const formData = new FormData(
+          document.getElementById("heroVillainForm")
+        );
+        const type = formData.get("type");
+        let outputHtml = `<h3>${
+          type === "hero" ? "Hero" : "Villain"
+        } Details:</h3>`;
+
+        for (let [key, value] of formData.entries()) {
+          let label = key.charAt(0).toUpperCase() + key.slice(1);
+          outputHtml += `<p>${label}: ${value}</p>`;
+        }
+
+        const outputDiv = document.createElement("div");
+        outputDiv.innerHTML = outputHtml;
+        document.getElementById("output").innerHTML = ""; // Clear any previous output
+        document.getElementById("output").appendChild(outputDiv);
+      }
+
+      function addAnother() {
+        document.getElementById("heroVillainForm").reset();
+        updateFormFields(); // Refresh form fields to default
+      }
+
+      window.onload = updateFormFields; // Initialize form fields on page load
+    </script>
+  </body>
+</html>

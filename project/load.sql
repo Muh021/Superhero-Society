@@ -1,0 +1,48 @@
+LOAD DATA INFILE '/path/to/AGENT.csv'
+INTO TABLE Agent
+FIELDS TERMINATED BY ','
+LINES TERMINATED BY '\n'
+IGNORE 1 LINES
+(AgentID, Age, Salary, Experience, Name);
+LOAD DATA INFILE '/path/to/HERO.csv'
+INTO TABLE Hero
+FIELDS TERMINATED BY ','
+LINES TERMINATED BY '\n'
+IGNORE 1 LINES
+(VillainID, Name, Age, DOB, People_Killed, Archnemesis);
+LOAD DATA INFILE '/path/to/LEADER.csv'
+INTO TABLE Leader
+FIELDS TERMINATED BY ','
+LINES TERMINATED BY '\n'
+IGNORE 1 LINES
+(LeaderID, Name, DOB, Age, Salary, Experience, Role);
+LOAD DATA INFILE '/path/to/MISSION.csv'
+INTO TABLE Mission
+FIELDS TERMINATED BY ','
+LINES TERMINATED BY '\n'
+IGNORE 1 LINES
+(MissionID, Name, HeroID, People_Saved, People_Lost, VillainID, Priority_Level);
+LOAD DATA INFILE '/path/to/SUPERPOWER.csv'
+INTO TABLE Superpower
+FIELDS TERMINATED BY ','
+LINES TERMINATED BY '\n'
+IGNORE 1 LINES
+(SuperpowerID, Description, Name);
+LOAD DATA INFILE '/path/to/HERO_SUPERPOWER.csv'
+INTO TABLE Hero_Superpowers
+FIELDS TERMINATED BY ','
+LINES TERMINATED BY '\n'
+IGNORE 1 LINES
+(HeroID, SuperpowerID);
+LOAD DATA INFILE '/path/to/VILLAIN_SUPERPOWER.csv'
+INTO TABLE Villain_Superpowers
+FIELDS TERMINATED BY ','
+LINES TERMINATED BY '\n'
+IGNORE 1 LINES
+(VillainID, SuperpowerID);
+LOAD DATA INFILE '/path/to/VILLAIN.csv'
+INTO TABLE Villain
+FIELDS TERMINATED BY ','
+LINES TERMINATED BY '\n'
+IGNORE 1 LINES
+(VillainID, Name, Age, DOB, People_Killed, Archnemesis);

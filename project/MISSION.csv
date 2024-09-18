@@ -1,0 +1,16 @@
+﻿MissionID,Name,HeroID,People_Saved,People_Lost,VillainID,Priority_Level
+1,Save the World,1,50,10,2,5
+2,Secure the Future,2,40,5,3,4
+3,Defend the Innocent,3,30,15,4,1
+4,Protect the Universe,4,35,20,1,2
+5,Rescue Operation,5,25,5,6,4
+6,Stop the Invasion,6,100,50,4,5
+7,Eliminate the Threat,7,60,10,8,4
+8,Bring Balance,8,70,5,9,3
+9,Save the City,9,80,20,5,2
+10,Restore Peace,1,20,5,11,1
+11,Protect the Ring,11,90,10,12,3
+12,Rescue the Hostages,12,40,10,13,2
+13,Conquer the Enemy,13,70,30,14,5
+14,Escape the Maze,11,50,20,15,4
+15,Find the Oasis,15,30,5,16,3

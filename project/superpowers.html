@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"
+/>
+<title>Superpowers</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<header>
+<nav id="navbar">
+<ul>
+<li><a href="index.html">Home</a></li>
+<li><a href="heroes-villains.html">Heroes/Villains</a></li>
+<li><a href="missions.html">Missions</a></li>
+<li><a href="superpowers.html">Superpowers</a></li>
+<li><a href="hero-superpower.html">Hero Superpowers</a></li>
+<li><a href="villain-superpower.html">Villain
+Superpowers</a></li>
+<li><a href="agents.html">Agents</a></li>
+</ul>
+</nav>
+<button id="loginButton">Login</button>
+</header>
+<div id="form-container">
+<h2>Add a Superpower</h2>
+<form id="superpowerForm"  action="process_superpower.php" method="post">
+<div id="formFields">
+<label for="superpowerId">SuperpowerID:</label>
+<input type="number" id="superpowerId" name="superpowerId"
+required />
+<label for="superpowerName">Name:</label>
+<input
+type="text"
+id="superpowerName"
+name="superpowerName"
+required
+/>
+<label for="superpowerDescription">Description:</label>
+<textarea
+id="superpowerDescription"
+name="superpowerDescription"
+required
+></textarea>
+</div>
+<input type="submit" value="Add Superpower" />
+</form>
+<button onclick="clearForm()">Add Another Superpower</button>
+</div>
+<div id="output"></div>
+<script>
+    document.getElementById("superpowerForm").addEventListener("submit", function (e) {
+        e.preventDefault(); // Prevent the default form submission
+        displaySuperpower();
+        this.submit(); // Now submit the form after displaying the superpower details
+    });
+    
+    function displaySuperpower() {
+        const formData = new FormData(document.getElementById("superpowerForm"));
+        let superpowerName = formData.get("superpowerName");
+        let outputHtml = `<h3>${superpowerName}</h3>`;
+        for (let [key, value] of formData.entries()) {
+            if (key !== "superpowerName") {
+                let label = "";
+                if (key === "superpowerId") {
+                    label = "SuperpowerID";
+                } else if (key === "superpowerDescription") {
+                    label = "Description";
+                } else {
+                    label = key.charAt(0).toUpperCase() + key.slice(1);
+                }
+                outputHtml += `<p>${label}: ${value}</p>`;
+            }
+        }
+        const outputDiv = document.createElement("div");
+        outputDiv.innerHTML = outputHtml;
+        document.getElementById("output").appendChild(outputDiv);
+    }
+    
+    function clearForm() {
+        document.getElementById("superpowerForm").reset();
+        document.getElementById("output").innerHTML = ''; // Clear the output
+    }
+    
+    document.getElementById("loginButton").addEventListener("click", function () {
+        alert("Login functionality not implemented yet.");
+    });
+</script>
+</body>
+</html>
+<div id="getSuperpowerContainer">
+    <h2>Get Superpower by ID</h2>
+    <form id="getSuperpowerForm">
+        <label for="getSuperpowerId">Superpower ID:</label>
+        <input type="number" id="getSuperpowerId" name="getSuperpowerId" required>
+        <input type="submit" value="Get Superpower">
+    </form>
+    <div id="superpowerDetails"></div>
+</div>
+
+<script>
+document.getElementById("getSuperpowerForm").addEventListener("submit", function (e) {
+    e.preventDefault(); // Prevent the default form submission
+    const superpowerId = document.getElementById("getSuperpowerId").value;
+    fetch(`process_superpower.php?superpowerId=${superpowerId}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data) {
+                let detailsHtml = `<h3>Superpower Details:</h3>`;
+                detailsHtml += `<p>ID: ${data.SuperpowerID}</p>`;
+                detailsHtml += `<p>Name: ${data.Name}</p>`;
+                detailsHtml += `<p>Description: ${data.Description}</p>`;
+                document.getElementById("superpowerDetails").innerHTML = detailsHtml;
+            } else {
+                document.getElementById("superpowerDetails").innerHTML = "<p>Superpower not found.</p>";
+            }
+        })
+        .catch(error => console.error('Error fetching data:', error));
+});
+</script>

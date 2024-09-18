@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"
+/>
+<title>Villain Superpowers</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<header>
+<nav id="navbar">
+<ul>
+<li><a href="index.html">Home</a></li>
+<li><a href="heroes-villains.html">Heroes/Villains</a></li>
+<li><a href="missions.html">Missions</a></li>
+<li><a href="superpowers.html">Superpowers</a></li>
+<li><a href="hero-superpower.html">Hero Superpowers</a></li>
+<li><a href="villain-superpower.html">Villain
+Superpowers</a></li>
+<li><a href="agents.html">Agents</a></li>
+</ul>
+</nav>
+<button id="loginButton">Login</button>
+</header>
+<div id="form-container">
+<h2>Add Superpower to Villain</h2>
+<form id="villainSuperpowerForm"  action="process_villainSuperpowerForm.php" method="post">
+<div id="formFields">
+<label for="VillainID">VillainID:</label>
+<input type="number" id="VillainID" name="VillainID" required />
+<label for="SuperpowerID">SuperpowerID:</label>
+<input type="number" id="SuperpowerID" name="SuperpowerID"
+required />
+</div>
+<input type="submit" value="Assign Superpower" />
+</form>
+<button onclick="clearForm()">Add Another Villain
+Superpower</button>
+</div>
+<div id="output"></div>
+<script>
+    document.getElementById("villainSuperpowerForm").addEventListener("submit", function (e) {
+        e.preventDefault(); // Prevent the default form submission
+        displayAssignedSuperpower("Villain");
+        this.submit(); // Now submit the form after displaying the assignment details
+    });
+    
+    function displayAssignedSuperpower(type) {
+        const formData = new FormData(document.getElementById(type.toLowerCase() + "SuperpowerForm"));
+        let outputHtml = `<h3>${type} Superpower Assignment</h3>`;
+        outputHtml += `<p>VillainID: ${formData.get("VillainID")}</p>`;
+        outputHtml += `<p>SuperpowerID: ${formData.get("SuperpowerID")}</p>`;
+        const outputDiv = document.createElement("div");
+        outputDiv.classList.add("assignment-entry");
+        outputDiv.innerHTML = outputHtml;
+        document.getElementById("output").appendChild(outputDiv);
+    }
+    
+    function clearForm() {
+        document.getElementById("villainSuperpowerForm").reset();
+        document.getElementById("output").innerHTML = ''; // Clear the output
+    }
+    
+    document.getElementById("loginButton").addEventListener("click", function () {
+        alert("Login functionality not implemented yet.");
+    });
+</script>
+</body>
+</html>
